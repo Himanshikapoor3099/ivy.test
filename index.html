@@ -35,6 +35,32 @@ h1,h2,h3,p{margin:0}
 .swrow{display:flex;gap:10px;flex-wrap:wrap}
 .swb{width:44px;height:44px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line);cursor:pointer;padding:0}
 .swb.on{box-shadow:0 0 0 2px var(--plum)}
+/* hero carousel: full-colour slides, three-arch collage per slide */
+.htrack{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:10px 14px 0;scroll-padding-inline:14px;-webkit-overflow-scrolling:touch}
+.htrack::-webkit-scrollbar{display:none}
+.hslide{position:relative;flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;border-radius:28px;padding:22px 18px 18px;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.hslide::before{content:'';position:absolute;width:260px;height:260px;border-radius:50%;right:-90px;top:-110px;background:var(--acc);opacity:.18}
+.hslide .kick{position:relative;align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--acc);color:var(--btnfg);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.hslide h1{position:relative;font-family:'Fraunces',Georgia,serif;font-variation-settings:'SOFT' 100;font-size:38px;line-height:1;font-weight:400;letter-spacing:-.02em;text-wrap:balance}
+.hslide h1 em{font-weight:500;color:var(--em)}
+.hslide p{position:relative;font-size:14px;line-height:1.5;opacity:.88;max-width:30ch}
+.hcol{position:relative;display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:8px;align-items:end;margin-top:2px}
+.hcol img{width:100%;object-fit:cover;object-position:center 12%;border-radius:999px 999px 16px 16px;box-shadow:0 10px 24px rgba(0,0,0,.14)}
+.hcol img:nth-child(1){height:196px}.hcol img:nth-child(2){height:244px}.hcol img:nth-child(3){height:196px}
+.hcta{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hcta .btn{background:var(--acc);color:var(--btnfg);min-height:48px;padding:0 22px}
+.hcta .price{font-size:13px;font-weight:500;letter-spacing:.04em;opacity:.9}
+.hdots{display:flex;justify-content:center;gap:4px;padding-top:6px}
+.hdots button{width:28px;height:28px;border:0;background:none;padding:0;display:grid;place-items:center;cursor:pointer}
+.hdots button span{display:block;width:8px;height:8px;border-radius:4px;background:#D9C2CA;transition:width .3s,background .3s}
+.hdots button.on span{width:24px;background:var(--plum)}
+/* USP cards: each its own tint, solid icon disc */
+.uspwrap{padding-top:22px}
+.uspwrap h2{font-size:22px;font-weight:400;line-height:1.1;padding:0 18px 12px}
+.uspc{width:148px;min-height:150px;padding:16px 14px;border-radius:22px;background:var(--bg);display:flex;flex-direction:column;gap:10px}
+.uspc .ic{width:48px;height:48px;border-radius:16px;background:var(--ic);color:#fff;display:grid;place-items:center;box-shadow:0 6px 14px var(--sh)}
+.uspc b{font-size:15px;font-weight:600;line-height:1.2;color:var(--tx)}
+.uspc small{font-size:12.5px;line-height:1.4;color:#5E4650}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* app shell: full-bleed on phones, phone-width column on bigger screens */
 .app{position:relative;max-width:480px;min-height:100vh;min-height:100dvh;margin:0 auto;background:var(--milk);box-shadow:0 0 60px rgba(43,29,38,.12)}
@@ -294,6 +320,16 @@ PRODUCTS.forEach((p) => {
   p.img = p.variants[0].img; p.color = p.variants[0].color;
 });
 const vOf = (p, v) => p.variants[Math.min(Number(v) || 0, p.variants.length - 1)];
+const HERO = [
+  {kick:'The satin edit', h:'Silk-soft<br><em>nights.</em>', p:'Italian satin sets with a cool, liquid feel and bold blooms.', cta:'Shop satin', href:'#/fabric/Italian%20Satin', price:'From ₹1,899',
+    bg:'#4A1D2E', fg:'#FFF3F6', acc:'#F4B9C8', em:'#F4B9C8', btnfg:'#4A1D2E', imgs:[IMG.n34, IMG.n26, IMG.n37]},
+  {kick:'Co-ords, but softer', h:'Out the door in <em>one set.</em>', p:'Linen and pinstripe co-ords for brunch, travel and everything between.', cta:'Shop co-ords', href:'#/shop/cordsets', price:'From ₹1,799',
+    bg:'#F7D8C8', fg:'#3A2228', acc:'#A24F67', em:'#A24F67', btnfg:'#FFFFFF', imgs:[IMG.n24, IMG.n30, IMG.n16]},
+  {kick:'New · Maternity', h:'Made for <em>new mums.</em>', p:'Nursing sets with discreet feeding openings and room to rest.', cta:'Shop maternity', href:'#/shop/maternity', price:'From ₹1,449',
+    bg:'#DCE7D6', fg:'#22301F', acc:'#3F5F3B', em:'#3F5F3B', btnfg:'#FFFFFF', imgs:[IMG.n43, IMG.n40, IMG.n50]},
+  {kick:'Tee & pyjama sets', h:'Everyday cosy, <em>all day.</em>', p:'Playful prints in soft hosiery, made for lazy mornings.', cta:'Shop tee sets', href:'#/shop/tshirts', price:'From ₹1,099',
+    bg:'#FBE4EA', fg:'#3A2228', acc:'#A24F67', em:'#A24F67', btnfg:'#FFFFFF', imgs:[IMG.n36, IMG.n39, IMG.n15]}
+];
 const SIZES = ['XS','S','M','L','XL','XXL'];
 const FREE_AT = 999, SHIP = 79, COUPON = 'IVYFIRST';
 
@@ -417,37 +453,32 @@ function renderTabs() {
 
 /* ---------- views ---------- */
 function homeView() {
-  const uspHtml = [[P.spool,'Premium fabric','Tencel, satin, linen'],[P.tag,'Lowest price','Luxury without the mark-up'],[P.shop,'Vast designs','Prints for every mood'],[P.moon,'Pure comfort','Waistbands that never dig'],[P.gem,'Luxurious feel','Finishes that feel special, every night']]
-    .map(([ic, l, d]) => `<div class="uspi"><span class="ic">${I(ic, 22)}</span><span><b>${l}</b><small>${d}</small></span></div>`).join('');
+  const uspHtml = [
+    [P.spool, 'Premium fabric', 'Tencel, satin, linen and soft knits', '#FCE3EA', '#A24F67', '#7E3349'],
+    [P.tag, 'Lowest price', 'Luxury feel without the mark-up', '#FDE6D6', '#C2603A', '#8E4021'],
+    [P.shop, 'Vast designs', 'New prints and silhouettes, always', '#E4EFE0', '#4A6B46', '#33502F'],
+    [P.moon, 'Pure comfort', 'Relaxed cuts, waistbands that never dig', '#ECE6F7', '#6A58A6', '#4C3D82'],
+    [P.gem, 'Luxurious feel', 'Finishes that feel special every night', '#F6EAD6', '#A27833', '#76561F']
+  ].map(([ic, l, d, bg, c, tx]) => `<div class="uspc" style="--bg:${bg};--ic:${c};--tx:${tx};--sh:${c}55"><span class="ic">${I(ic, 24)}</span><b>${l}</b><small>${d}</small></div>`).join('');
   const cats = CATS.map((c) => { const n = PRODUCTS.filter((p) => p.cats.includes(c.id)).length;
     return `<a class="catc" href="#/shop/${c.id}"><div class="ph"><img src="${c.cover}" alt="" loading="lazy"></div><b>${esc(c.name)}</b><small>${n} ${n > 1 ? 'styles' : 'style'}</small></a>`; }).join('');
   const best = PRODUCTS.slice(0, 5).map((p) => card(p)).join('');
   const fabs = FABRICS.map((f) => `<a class="fab" href="#/fabric/${encodeURIComponent(f.name)}"><b>${f.name}</b><small>${f.note}</small></a>`).join('');
   const newIn = ['17601','1333','16189','IVY-B01'].map((id) => card(byId(id))).join('');
   return `
-  <section class="hero2">
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <span class="eyebrow">Nightwear · Loungewear · Co-ords</span>
-      <h1 class="serif">Comfort,<br><em>beautifully</em> worn.</h1>
-      <p>Tencel, satin, linen and soft cotton knits. Luxurious to touch, gentle on the price tag.</p>
-    </div>
-    <div class="h2img">
-      <img src="${IMG.p9}" alt="Model in a dusty rose satin floral pyjama set">
-      <div class="seal"><div><div style="font-size:9px;letter-spacing:.16em;text-transform:uppercase">From</div><div class="serif" style="font-size:22px;font-style:italic;line-height:1.05">₹1,099</div></div></div>
-    </div>
-    <div class="h2btns"><a class="btn btn-p" href="#/shop/night-suits">Shop night suits</a><a class="btn btn-o" href="#/shop">Explore all</a></div>
+  <section aria-label="Featured collections">
+    <div class="htrack" id="htrack">${HERO.map((h, i) => `<article class="hslide" style="--bg:${h.bg};--fg:${h.fg};--acc:${h.acc};--em:${h.em};--btnfg:${h.btnfg}" aria-roledescription="slide" aria-label="${i + 1} of ${HERO.length}">
+      <span class="kick">${h.kick}</span>
+      <h1>${h.h}</h1>
+      <p>${h.p}</p>
+      <div class="hcol">${h.imgs.map((src) => `<img src="${src}" alt="" loading="${i ? 'lazy' : 'eager'}">`).join('')}</div>
+      <div class="hcta"><a class="btn" href="${h.href}">${h.cta} ${I(P.arrow, 18)}</a><span class="price">${h.price}</span></div>
+    </article>`).join('')}</div>
+    <div class="hdots" id="hdots">${HERO.map((h, i) => `<button data-act="heroGo" data-id="${i}" aria-label="Show slide ${i + 1}" class="${i ? '' : 'on'}"><span></span></button>`).join('')}</div>
   </section>
-  <section class="pad" style="margin-top:16px">
-    <div class="offercard">
-      <div class="txt"><span class="eyebrow" style="color:#8A4A5C">Welcome offer</span><b>10% off your first order</b><small>Free shipping on orders over ₹999</small></div>
-      ${S.couponApplied
-        ? `<a class="code done" href="#/bag">Applied<span>View bag</span></a>`
-        : `<button class="code" data-act="applyCode">${COUPON}<span>Tap to apply</span></button>`}
-    </div>
-  </section>
-  <section class="uspband" aria-label="Why Ivy">
-    <h2 class="serif">Why you'll love <em>Ivy</em></h2>
-    <div class="uspgrid">${uspHtml}</div>
+  <section class="uspwrap" aria-label="Why Ivy">
+    <h2 class="serif">Why you'll love <em style="color:var(--plum)">Ivy</em></h2>
+    <div class="hs">${uspHtml}</div>
   </section>
   <section class="sec"><div class="sec-head pad"><h2 class="serif">Shop by category</h2><a class="more" href="#/shop">View all</a></div><div class="hs">${cats}</div></section>
   <section class="sec"><div class="sec-head pad"><div><span class="eyebrow">Most loved</span><h2 class="serif">Bestsellers</h2></div><a class="more" href="#/shop">See all</a></div><div class="hs">${best}</div></section>
@@ -581,6 +612,10 @@ function bagView() {
   <div style="padding:14px 18px;background:var(--blush);display:flex;flex-direction:column;gap:8px"><span style="font-size:14px;font-weight:500">${t.msg}</span><div class="bar"><span style="width:${t.pct}%"></span></div></div>
   <div class="pad">${lines}</div>
   <div class="pad" style="padding-top:18px;display:flex;flex-direction:column;gap:14px">
+    ${S.couponApplied ? '' : `<div class="offercard" style="padding:14px 14px 14px 18px">
+      <div class="txt"><span class="eyebrow" style="color:#8A4A5C">First order?</span><b style="font-size:18px">Take 10% off</b></div>
+      <button class="code" data-act="applyCode">${COUPON}<span>Tap to apply</span></button>
+    </div>`}
     <form data-form="coupon" novalidate style="display:flex;gap:8px">
       <label for="coupon" class="sr">Coupon code</label>
       <input id="coupon" class="field" placeholder="Coupon code" autocapitalize="characters" value="${esc(S.coupon)}" style="border-radius:999px">
@@ -687,6 +722,38 @@ function render() {
   renderTop(); renderTabs();
   $('#main').innerHTML = v === 'shop' ? shopView() : v === 'product' ? productView() : v === 'bag' ? bagView() : v === 'checkout' ? checkoutView() : v === 'done' ? doneView() : homeView();
   renderCta(); renderSheet();
+  if (v === 'home') initHero();
+}
+function initHero() {
+  const tr = document.getElementById('htrack');
+  if (!tr) return;
+  const dots = [...document.querySelectorAll('#hdots button')];
+  tr.addEventListener('scroll', () => {
+    const i = heroIndex(tr);
+    dots.forEach((d, k) => d.classList.toggle('on', k === i));
+  }, {passive:true});
+  ['touchstart', 'pointerdown'].forEach((e) => tr.addEventListener(e, () => { S.heroHold = Date.now(); }, {passive:true}));
+}
+function heroIndex(tr) {
+  const step = tr.children[1] ? tr.children[1].offsetLeft - tr.children[0].offsetLeft : tr.clientWidth;
+  return Math.round(tr.scrollLeft / step);
+}
+function heroGo(i) {
+  const tr = document.getElementById('htrack');
+  if (!tr || !tr.children[i]) return;
+  const left = tr.children[i].offsetLeft - tr.children[0].offsetLeft;
+  tr.scrollTo({left, behavior: 'smooth'});
+  document.querySelectorAll('#hdots button').forEach((d, k) => d.classList.toggle('on', k === i));
+  // some webviews ignore smooth scrolling; jump if it did not move
+  setTimeout(() => { if (Math.abs(tr.scrollLeft - left) > 4 && heroIndex(tr) !== i) tr.scrollLeft = left; }, 700);
+}
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  setInterval(() => {
+    const tr = document.getElementById('htrack');
+    if (!tr || S.sheet || document.hidden || Date.now() - (S.heroHold || 0) < 7000) return;
+    const n = tr.children.length, i = heroIndex(tr);
+    heroGo((i + 1) % n);
+  }, 4500);
 }
 function renderMainOnly() { $('#main').innerHTML = shopView(); renderCta(); }
 
@@ -735,6 +802,7 @@ document.addEventListener('click', (ev) => {
     case 'remove': S.cart.splice(Number(id), 1); save(); render(); break;
     case 'pay': S.pay = id; $('#main').innerHTML = checkoutView(); break;
     case 'placeOrder': placeOrder(); break;
+    case 'heroGo': S.heroHold = Date.now(); heroGo(Number(id)); break;
     case 'applyCode': S.coupon = COUPON; S.couponApplied = true; S.couponOk = true; S.couponMsg = COUPON + ' applied — 10% off your order.'; vib(); render(); toast(COUPON + ' applied · 10% off', ['#/bag', 'View bag']); break;
     case 'openFilters': S.sheet = 'filters'; renderSheet(); break;
     case 'closeSheet': S.sheet = null; render(); break;
